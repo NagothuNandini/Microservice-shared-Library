@@ -1,23 +1,15 @@
+library('my-shared-lib') _
 pipeline {
     agent any
-
     stages {
-        stage('Build & Tag Docker Image') {
+        stage("Build & Push") {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker build -t nandini951/productcatalogservice:latest ."
-                    }
-                }
-            }
-        }
-        
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push nandini951/productcatalogservice:latest "
-                    }
+                    dockerBuildAndPush(
+                        imageName: "productcatalogservice",
+                        registry: "nandini951",
+                        registryCreds: "docker-cred"
+                    )
                 }
             }
         }
