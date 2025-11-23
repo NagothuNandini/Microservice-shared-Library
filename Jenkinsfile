@@ -1,7 +1,8 @@
 library('my-shared-lib') _
 pipeline {
     agent any
-    stage("Build & Push") {
+    stages {
+        stage("Build & Push") {
             steps {
                 script {
                     dockerBuildAndPush(
@@ -12,4 +13,5 @@ pipeline {
                 }
             }
         }
+    }
 }
